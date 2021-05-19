@@ -35,6 +35,18 @@ const createUser = async (req, res) => {
     }
 };
 
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        return res.status(200).json({
+            success: true,
+            data: users,
+        });
+    } catch (error) {
+        return res.status(400).json({ success: false, error });
+    }
+};
+
 const loginUser = (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -87,4 +99,5 @@ const loginUser = (req, res) => {
 module.exports = {
     createUser,
     loginUser,
+    getUsers,
 };
