@@ -60,6 +60,20 @@ const updateUser = async (req, res) => {
     }
 };
 
+const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findOneAndDelete({ _id: req.params.id });
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: "User not found" });
+        }
+
+        return res.status(200).json({ success: true, id: user._id });
+    } catch (error) {
+        return res.status(400).json({ success: false, error });
+    }
+};
+
 const getUsers = async (req, res) => {
     try {
         const users = await User.find({});
@@ -137,6 +151,7 @@ module.exports = {
     createUser,
     loginUser,
     updateUser,
+    deleteUser,
     getUsers,
     getUserByMail,
 };

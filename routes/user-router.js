@@ -9,5 +9,6 @@ router.post("/login", UserController.loginUser);
 router.get("/users", verifyToken, UserController.getUsers);
 router.get("/user/:email", verifyToken, UserController.getUserByMail);
 router.put("/user/:email", verifyToken, UserController.updateUser);
+router.delete("/user/:id", verifyToken, UserController.deleteUser);
 
 module.exports = router;
