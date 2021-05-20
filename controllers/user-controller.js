@@ -35,6 +35,31 @@ const createUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    const body = req.body;
+
+    if (!body || Object.keys(body).length === 0) {
+        return res.status(400).json({
+            success: false,
+            error: "You must provide a body to update",
+        });
+    }
+
+    try {
+        await User.updateOne({ email: req.params.email }, body);
+        return res.status(200).json({
+            success: true,
+            message: "User updated!",
+        });
+    } catch (error) {
+        return res.status(404).json({
+            success: false,
+            error,
+            message: "User not updated!"
+        });
+    }
+};
+
 const getUsers = async (req, res) => {
     try {
         const users = await User.find({});
@@ -111,6 +136,7 @@ const loginUser = (req, res) => {
 module.exports = {
     createUser,
     loginUser,
+    updateUser,
     getUsers,
-    getUserByMail
+    getUserByMail,
 };
